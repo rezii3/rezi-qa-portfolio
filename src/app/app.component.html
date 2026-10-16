@@ -1,0 +1,341 @@
+<div class="portfolio-wrapper">
+  <!-- TOP NAVIGATION -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-logo">RL</span>
+        <div class="brand-info">
+          <span class="brand-name">{{ profile.name }}</span>
+          <span class="brand-tag">QA & Frontend Portfolio</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#about">პროფილი</a>
+        <a href="#skills">უნარები</a>
+        <a href="#jira-lab">Jira Bug Lab</a>
+        <a href="#api-console">API & კოდი</a>
+        <a href="#experience">გამოცდილება</a>
+        <a [href]="profile.github" target="_blank" class="github-btn">
+          <span>GitHub</span> ↗
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="about" class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="status-pill">
+          <span class="pulse-dot"></span> ხელმისაწვდომია QA Intern / Junior & IT პოზიციებზე
+        </div>
+        <h1 class="hero-title">
+          ხარისხის უზრუნველყოფა <span class="gradient-text">კოდისა და არქიტექტურის</span> ცოდნით.
+        </h1>
+        <p class="hero-description">{{ profile.summary }}</p>
+
+        <div class="hero-actions">
+          <a href="#jira-lab" class="btn-primary">🔍 ნახე ჩემი Bug Report-ები (Jira)</a>
+          <a [href]="profile.github" target="_blank" class="btn-secondary">💻 GitHub: rezii3</a>
+          <a [href]="profile.linkedin" target="_blank" class="btn-secondary">🔗 LinkedIn</a>
+        </div>
+
+        <div class="quick-contacts">
+          <span>📍 {{ profile.location }}</span>
+          <span>📞 {{ profile.phone }}</span>
+          <span>✉️ {{ profile.email }}</span>
+          <span>🚗 მართვის მოწმობა: {{ profile.license }}</span>
+        </div>
+      </div>
+
+      <!-- QA LIVE TERMINAL CARD -->
+      <div class="hero-terminal">
+        <div class="terminal-header">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="terminal-title">rezi-lomidze&#64;qa-inspector: ~/diagnostics</span>
+        </div>
+        <div class="terminal-body">
+          <div class="cmd-line"><span class="prompt">$</span> run-qa-profile --candidate="Rezi Lomidze"</div>
+          <div class="cmd-output success">✔ Frontend Experience: 6 Months &#64; 500ml (Angular / TS)</div>
+          <div class="cmd-output success">✔ API Testing: REST / HTTP / JSON / Postman / DevTools</div>
+          <div class="cmd-output success">✔ Database & Backend: SQL (SELECT, JOIN) / C# .NET Basics</div>
+          <div class="cmd-output success">✔ IT Infrastructure: CompTIA A+ Certified (IT STEP Academy)</div>
+          <div class="cmd-line"><span class="prompt">$</span> verify-bug-hunting-skills</div>
+          <div class="cmd-output highlight">
+            [INFO] Root Cause Analysis Ready: Inspecting DOM, Network Payloads & Console Logs...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- METRICS BAR -->
+    <div class="container metrics-grid">
+      <div class="metric-card" *ngFor="let m of metrics">
+        <div class="metric-val">{{ m.value }}</div>
+        <div class="metric-lbl">{{ m.label }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS MATRIX SECTION -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">TECH STACK & QA ARSENAL</span>
+        <h2>ტექნიკური და QA უნარების მატრიცა</h2>
+        <p>კომბინირებული ცოდნა: პროგრამული ტესტირება, ვებ-დეველოპმენტი და სისტემური მხარდაჭერა</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card" *ngFor="let cat of skillCategories">
+          <div class="skill-card-top">
+            <div class="skill-icon-title">
+              <span class="skill-icon">{{ cat.icon }}</span>
+              <h3>{{ cat.title }}</h3>
+            </div>
+            <span class="skill-badge">{{ cat.badge }}</span>
+          </div>
+          <ul class="skill-items">
+            <li *ngFor="let s of cat.skills" [class.highlighted]="s.highlight">
+              <span class="s-name">{{ s.name }}</span>
+              <span class="s-level">{{ s.level }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE JIRA BUG TRACKER SECTION -->
+  <section id="jira-lab" class="section bg-darker">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">INTERACTIVE JIRA SIMULATION</span>
+        <h2>🐞 Jira Bug Reporting & ტესტ-კეისების ლაბორატორია</h2>
+        <p>დააწკაპუნე ნებისმიერ თიქეთზე სრული Bug Report-ის (Steps, Expected/Actual, Root Cause) სანახავად</p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="filter-bar">
+        <button [class.active]="selectedSeverity === 'ALL'" (click)="selectedSeverity = 'ALL'">ყველა ({{ jiraTickets.length }})</button>
+        <button [class.active]="selectedSeverity === 'Critical'" (click)="selectedSeverity = 'Critical'">🔴 Critical</button>
+        <button [class.active]="selectedSeverity === 'Major'" (click)="selectedSeverity = 'Major'">🟠 Major</button>
+        <button [class.active]="selectedSeverity === 'Medium'" (click)="selectedSeverity = 'Medium'">🟡 Medium</button>
+        <button [class.active]="selectedSeverity === 'Low'" (click)="selectedSeverity = 'Low'">🔵 Low</button>
+      </div>
+
+      <!-- Tickets Grid -->
+      <div class="jira-grid">
+        <div class="jira-card" *ngFor="let ticket of filteredTickets" (click)="openTicketModal(ticket)">
+          <div class="jira-card-header">
+            <span class="jira-key">{{ ticket.key }}</span>
+            <div class="jira-badges">
+              <span class="sev-badge" [ngClass]="ticket.severity.toLowerCase()">{{ ticket.severity }}</span>
+              <span class="prio-badge">Prio: {{ ticket.priority }}</span>
+            </div>
+          </div>
+          <h4 class="jira-summary">{{ ticket.summary }}</h4>
+          <div class="jira-meta">
+            <span>📦 მოდული: {{ ticket.module }}</span>
+            <span class="jira-status">{{ ticket.status }}</span>
+          </div>
+          <div class="jira-root-cause">
+            <strong>🔍 Tech Root Cause:</strong> {{ ticket.techDetails }}
+          </div>
+          <div class="jira-card-footer">
+            <span>სრული რეპორტის ნახვა →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test Suites Summary -->
+      <div class="suites-grid">
+        <div class="suite-card" *ngFor="let suite of testSuites">
+          <div class="suite-top">
+            <span class="suite-id">{{ suite.id }}</span>
+            <span class="suite-tool">{{ suite.tool }}</span>
+          </div>
+          <h3>{{ suite.title }}</h3>
+          <p>{{ suite.description }}</p>
+          <div class="suite-stats">
+            <span>📋 <strong>{{ suite.casesCount }}</strong> Test Cases</span>
+            <span>🎯 <strong>{{ suite.coverage }}</strong></span>
+          </div>
+          <div class="suite-tags">
+            <span *ngFor="let tag of suite.tags">{{ tag }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API & SQL & AUTOMATION SHOWCASE -->
+  <section id="api-console" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">BEYOND MANUAL TESTING</span>
+        <h2>⚙️ REST API, SQL და კოდის დონეზე დიაგნოსტიკა</h2>
+        <p>რატომ არის ჩემი Frontend გამოცდილება უპირატესობა QA გუნდისთვის</p>
+      </div>
+
+      <div class="code-showcase-grid">
+        <!-- Postman / API Block -->
+        <div class="code-box">
+          <div class="code-box-header">
+            <span>📡 Postman / REST API Validation</span>
+            <span class="code-tag">HTTP / JSON</span>
+          </div>
+          <pre><code>// Postman Post-Response Test Script
+pm.test("Status code is 200 OK", function () &#123;
+    pm.response.to.have.status(200);
+&#125;);
+
+pm.test("Response time is less than 400ms", function () &#123;
+    pm.expect(pm.response.responseTime).to.be.below(400);
+&#125;);
+
+pm.test("Validate User Schema & Role", function () &#123;
+    const jsonData = pm.response.json();
+    pm.expect(jsonData.data).to.have.property("id");
+    pm.expect(jsonData.data.email).to.include("&#64;");
+&#125;);</code></pre>
+        </div>
+
+        <!-- SQL & Playwright Block -->
+        <div class="code-box">
+          <div class="code-box-header">
+            <span>🗄️ SQL Data Verification & TypeScript</span>
+            <span class="code-tag">SQL / Playwright</span>
+          </div>
+          <pre><code>-- ბაზაში რეგისტრირებული შეკვეთის და სტატუსის გადამოწმება
+SELECT u.id, u.email, o.order_number, o.status, o.total_amount
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id
+WHERE u.email = 'rezi.lomidze.04&#64;gmail.com'
+  AND o.status = 'COMPLETED';
+
+// TypeScript / Playwright UI Assertion
+await expect(page.locator('.alert-error')).toBeVisible();
+await expect(page).toHaveURL(/.*dashboard/);</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE & EDUCATION TIMELINE -->
+  <section id="experience" class="section bg-darker">
+    <div class="container dual-timeline">
+      <!-- Work Experience -->
+      <div>
+        <div class="col-heading">💼 სამუშაო გამოცდილება</div>
+        <div class="timeline">
+          <div class="timeline-item" *ngFor="let exp of experiences">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="t-header">
+                <h4>{{ exp.role }}</h4>
+                <span class="t-period">{{ exp.period }}</span>
+              </div>
+              <div class="t-company">{{ exp.company }} • <span class="t-type">{{ exp.type }}</span></div>
+              <ul class="t-list">
+                <li *ngFor="let item of exp.highlights">{{ item }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education & Certificates -->
+      <div>
+        <div class="col-heading">🎓 განათლება და სერტიფიკატები</div>
+        <div class="timeline">
+          <div class="timeline-item" *ngFor="let edu of education">
+            <div class="timeline-dot edu-dot"></div>
+            <div class="timeline-content">
+              <div class="t-header">
+                <h4>{{ edu.title }}</h4>
+                <span class="t-period">{{ edu.period }}</span>
+              </div>
+              <div class="t-company">{{ edu.institution }}</div>
+              <p class="t-desc">{{ edu.details }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal Qualities & Languages Card -->
+        <div class="extra-info-card">
+          <h4>🌐 ენები და პიროვნული თვისებები</h4>
+          <div class="lang-bars">
+            <div *ngFor="let l of profile.languages" class="lang-item">
+              <strong>{{ l.lang }}:</strong> <span>{{ l.level }}</span>
+            </div>
+          </div>
+          <div class="soft-tags">
+            <span>🎯 დეტალებზე ორიენტირებულობა</span>
+            <span>🧠 ანალიტიკური აზროვნება</span>
+            <span>🤝 გუნდური მუშაობა</span>
+            <span>⚡ სწრაფი ათვისება</span>
+            <span>🛡️ სიმშვიდე სტრესულ გარემოში</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <h3>{{ profile.name }} — QA & Frontend Portfolio</h3>
+        <p>აწყობილია Angular-სა და TypeScript-ზე • {{ profile.email }} • {{ profile.phone }}</p>
+      </div>
+      <div class="footer-links">
+        <a [href]="profile.github" target="_blank">GitHub</a>
+        <a [href]="profile.linkedin" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JIRA TICKET DETAILS MODAL -->
+  <div class="modal-backdrop" *ngIf="activeTicket as ticket" (click)="closeTicketModal()">
+    <div class="modal-window" (click)="$event.stopPropagation()">
+      <div class="modal-top">
+        <div>
+          <span class="jira-key">{{ ticket.key }}</span>
+          <span class="sev-badge" [ngClass]="ticket.severity.toLowerCase()" style="margin-left:8px;">
+            {{ ticket.severity }}
+          </span>
+        </div>
+        <button class="close-btn" (click)="closeTicketModal()">✕</button>
+      </div>
+      <h3 class="modal-title">{{ ticket.summary }}</h3>
+      <div class="modal-env"><strong>🖥️ Environment:</strong> {{ ticket.environment }}</div>
+      <div class="modal-section">
+        <strong>📌 Precondition (წინაპირობა):</strong>
+        <p>{{ ticket.precondition }}</p>
+      </div>
+      <div class="modal-section">
+        <strong>🔢 Steps to Reproduce (ნაბიჯები):</strong>
+        <ol>
+          <li *ngFor="let step of ticket.steps">{{ step }}</li>
+        </ol>
+      </div>
+      <div class="modal-compare">
+        <div class="exp-box">
+          <strong>✅ Expected Result (მოსალოდნელი შედეგი):</strong>
+          <p>{{ ticket.expected }}</p>
+        </div>
+        <div class="act-box">
+          <strong>❌ Actual Result (ფაქტობრივი შედეგი):</strong>
+          <p>{{ ticket.actual }}</p>
+        </div>
+      </div>
+      <div class="modal-tech">
+        <strong>🔧 Technical Root Cause (DevTools ანალიზი):</strong>
+        <p>{{ ticket.techDetails }}</p>
+      </div>
+    </div>
+  </div>
+</div>
